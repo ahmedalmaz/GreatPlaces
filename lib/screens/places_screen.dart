@@ -17,26 +17,39 @@ class PlacesScreen extends StatelessWidget {
               })
         ],
       ),
-      body: Consumer<GreatPlaces>(
-        child: Center(
-          child: Text(
-            'you have no places go and add some ',
-            style: TextStyle(color: Colors.black),
-          ),
-        ),
-        builder: (ctx, data, child) =>data.items.length<=0 ?child: ListView.builder(
-          itemBuilder: (ctx, i) => Card(
-            margin: EdgeInsets.all(5),
-            elevation: 5,
-            child: ListTile(
-              leading: CircleAvatar(
-                backgroundImage: FileImage(data.items[i].image),
+      body: FutureBuilder(
+        future:
+            Provider.of<GreatPlaces>(context, listen: false).fetchAndSetData(),
+        builder: (ctx, snapshot) => snapshot.connectionState ==
+                ConnectionState.waiting
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : Consumer<GreatPlaces>(
+                child: Center(
+                  child: Text(
+                    'you have no places go and add some ',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+                builder: (ctx, data, child) => data.items.length <= 0
+                    ? child
+                    : ListView.builder(
+                        itemBuilder: (ctx, i) => Card(
+                          margin: EdgeInsets.all(5),
+
+
+                          elevation: 5,
+                          child: ListTile(
+                            leading: CircleAvatar(
+                              backgroundImage: FileImage(data.items[i].image),
+                            ),
+                            title: Text(data.items[i].title),
+                          ),
+                        ),
+                        itemCount: data.items.length,
+                      ),
               ),
-              title: Text(data.items[i].title),
-            ),
-          ),
-          itemCount: data.items.length,
-        ),
       ),
     );
   }

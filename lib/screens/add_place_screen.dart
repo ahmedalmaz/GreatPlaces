@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:greate_places/providers/great_places.dart';
 import 'package:greate_places/widgets/add_pic.dart';
+import 'package:greate_places/widgets/location.dart';
 import 'package:provider/provider.dart';
 
 class AddPlaceScreen extends StatefulWidget {
@@ -26,7 +27,9 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
     }
     Provider.of<GreatPlaces>(context,listen: false).addPlace(_controller.text, _image);
     Navigator.of(context).pop();
+
   }
+
 
 
   @override
@@ -51,7 +54,9 @@ class _AddPlaceScreenState extends State<AddPlaceScreen> {
                      ),
                     ),
                     SizedBox(height: 10,),
-                   AddPic(_takePic)
+                   AddPic(_takePic),
+                    SizedBox(height: 10,),
+                    Location(),
                   ],
                 ),
               ),
